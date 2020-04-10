@@ -118,9 +118,10 @@
 (defun zotero-query (sql-query)
   (interactive)
   (shell-command-to-string
-   (format "%s -separator \"\t\" \"%s\" \"%s\""
+   (format "%s -separator \"\t\" \"%s%s\" \"%s\""
            "sqlite3"
-           "/mnt/4EEDC07F44412A81/Zotero/zotero.sqlite"
+           (file-name-as-directory zotero-root-dir)
+           "zotero.sqlite"
            sql-query)))
 
 (defun zotero-query-to-alist (query-result)
