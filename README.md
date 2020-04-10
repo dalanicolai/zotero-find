@@ -1,4 +1,5 @@
 # zotero-find
+#### Emacs package to lookup and open items from a Zotero database
 The code in this package was taken and adopted from the calibre-mode package found at https://github.com/whacked/calibre-mode. For now it simply **searches for a match of a single given query in the titles and author names of the parent items** in the given Zotero database. **Items without parent items are not found** by the sql query in this package. Except for the code required for the zotero-find function, the code is dysfunctional (but kept here for possibility of updating/extending the package).
 
 
