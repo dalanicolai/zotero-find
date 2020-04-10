@@ -12,7 +12,7 @@ For spacemacs users the recommended way is to clone this repository in your `.em
     :init
     (setq zotero-root-dir "/path/to/directory/Zotero/"))
 ```
-or on linux if your Zotero directory is located at it's default locaten `~/Zotero/"` then just add `(use-package zotero-find)`
+or on linux if your Zotero directory is located at it's default location `~/Zotero/` then just add `(use-package zotero-find)`
 
 <b id="f1">1</b> You might want to keep your private directory in a (cloud) synced directory, and create a symlink to that directory from your .emacs.d directory. [↩](#a1)
 
