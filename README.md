@@ -4,6 +4,8 @@ The code in this package was taken and adopted from the calibre-mode package fou
 
 
 ## Install
+*Although I expect this package to just work, it is not yet tested on other systems than my own. If there is some problem then please message me or open an issue* 
+
 Install in the usual way and set the `zotero-root-dir` variable either via setq in your dot-file or via the customization menu
 
 ### Spacemacs
@@ -24,3 +26,5 @@ Use `M-x zotero find`, after selecting a match press small `o` to open file in c
 Use `SPC SPC zotero-find`, after selecting a match press small `o` to open file in current frame.
 
 You might want to add a shortcut under `SPC SPC a z` by placing `(spacemacs/set-leader-keys "az" 'zotero-find)` in the user- config section of your dot-file
+
+email: dalanicolai@gmail.com
