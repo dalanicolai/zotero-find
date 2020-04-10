@@ -10,7 +10,7 @@ For spacemacs users the recommended way is to clone this repository in your `.em
 ```
   (use-package zotero-find
     :init
-    (setq zotero-root-dir "/mnt/4EEDC07F44412A81/Zotero/"))
+    (setq zotero-root-dir "/path/to/directory/Zotero/"))
 ```
 
 <b id="f1">1</b> You might want to keep your private directory in a (cloud) synced directory, and create a symlink to that directory from your .emacs.d directory. [↩](#a1)
