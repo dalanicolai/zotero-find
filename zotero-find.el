@@ -134,11 +134,20 @@
           (:extra           ,(nth 3 spl-query-result))
           (:file-path    ,(concat (file-name-as-directory zotero-root-dir)
                                   "storage/"
-                                  (file-name-as-directory (nth 1 spl-query-result))
-                                  (substring (nth 3 spl-query-result) 8 nil)))))))
+                                  (if (nth 1 spl-query-result)
+                                      (file-name-as-directory (nth 1 spl-query-result))
+                                    "")
+                                  (if (nth 3 spl-query-result)
+                                      (substring (nth 3 spl-query-result) 8 nil)
+                                    ""
+                                    )))))))
 
 (defun zotero-build-default-query (whereclause &optional limit)
   (concat "SELECT itemAttachments . itemid, key, value, path from itemAttachments left join items using(itemID) left join itemdata ON itemData.itemID=itemAttachments.parentitemID left join itemDataValues using(valueID) "
+          whereclause))
+
+(defun zotero-build-notes-query (whereclause &optional limit)
+  (concat "SELECT itemAttachments . itemid, key, note, path from itemAttachments left join items using(itemID) left join itemNotes using(parentItemID)"
           whereclause))
 
 (defun zotero-query-by-field (wherefield argstring)
@@ -195,6 +204,14 @@
 ;;   (message (quote-% (zotero-query
 ;;             (concat "SELECT b.path FROM books AS b "
 ;;                     (zotero-read-query-filter-command))))))
+
+(defun zotero-list ()
+    (interactive)
+  (ivy-read "Zoek maar uit: "
+            (split-string
+             (shell-command-to-string
+              (concat "sqlite3 -list /mnt/4EEDC07F44412A81/Zotero/zotero.sqlite "
+                      (shell-quote-argument "SELECT value FROM itemdata left join itemdatavalues using(valueid) where fieldid = 110"))) "\n")))
 
 (defun zotero-get-cached-pdf-text (pdf-filepath)
   (let ((found-text (shell-command-to-string
@@ -403,8 +420,24 @@
 (defun zotero-find (&optional custom-query)
   (interactive)
   ;; (let* ((sql-query (zotero-build-default-query "WHERE fieldID = 110 and itemAttachments . itemID in (SELECT DISTINCT itemAttachments . itemid from itemAttachments left join itemdata ON itemData.itemID=itemAttachments.parentitemID left join itemcreators ON itemCreators.itemID=itemAttachments.parentitemID left join creators using(creatorID) left join itemDataValues using(valueid) WHERE (lastName like '%taus%' or value like '%taus%') and parentItemID is not NULL)"))
-  (let* ((query (read-string "Wat zoek je? "))
+  (let* ((query (read-string "Search for? "))
          (sql-query (zotero-build-default-query (format "WHERE fieldID = 110 and itemAttachments . itemID in (SELECT DISTINCT itemAttachments . itemid from itemAttachments left join itemdata ON itemData.itemID=itemAttachments.parentitemID left join itemcreators ON itemCreators.itemID=itemAttachments.parentitemID left join creators using(creatorID) left join itemDataValues using(valueid) WHERE (lastName like '%%%s%%' or value like '%%%s%%') and parentItemID is not NULL)" query query)))
+         (query-result (zotero-query sql-query))
+         (line-list (split-string (zotero-chomp query-result) "\n"))
+         (num-result (length line-list)))
+    (if (= 0 num-result)
+        (progn
+          (message "nothing found.")
+          (deactivate-mark))
+      (let ((res-list (mapcar #'(lambda (line) (zotero-query-to-alist line)) line-list)))
+        (if (= 1 (length res-list))
+            (zotero-file-interaction-menu (car res-list))
+          (zotero-format-selector-menu res-list))))))
+
+(defun zotero-find-notes (&optional custom-query)
+  (interactive)
+  (let* ((query (read-string "Search for? "))
+         (sql-query (zotero-build-notes-query (format "WHERE itemAttachments . itemID in (SELECT DISTINCT itemAttachments . itemid from itemAttachments left join itemNotes using(parentitemID) left join itemcreators ON itemCreators.itemID=itemAttachments.parentitemID left join creators using(creatorID) WHERE (lastName like '%%%s%%' or note like '%%%s%%') and parentItemID is not NULL)" query query)))
          (query-result (zotero-query sql-query))
          (line-list (split-string (zotero-chomp query-result) "\n"))
          (num-result (length line-list)))
