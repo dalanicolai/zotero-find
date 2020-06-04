@@ -3,7 +3,7 @@
 The code in this package was taken and adopted from the calibre-mode package found at https://github.com/whacked/calibre-mode. For now it simply **searches for a match of a single given query in the titles and author names of the parent items** in the given Zotero database. **Items without parent items are not found** by the sql query in this package. Except for the code required for the zotero-find function, the code is dysfunctional (but kept here for possibility of updating/extending the package).
 
 ## Warnings!!
-This package can not be used when an instance of Zotero is running as Zotero then locks the database (so more precisely, Zotero and this package can not use the same database at the same time).
+**This package can not be used when an instance of Zotero is running as Zotero then locks the database** (so more precisely, Zotero and this package can not use the same database at the same time).
 It looks like the package does not really work well if Zotero is not used to store the files locally (in the Zotero/storage subfolder).
 Although the package seems to work fine with both Ivy and Helm, I don't know how/if it works without any of these packages installed.
 
