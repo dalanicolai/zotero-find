@@ -25,10 +25,10 @@ or on linux if your Zotero directory is located at it's default location `~/Zote
 <b id="f1">1</b> You might want to keep your private directory in a (cloud) synced directory, and create a symlink to that directory from your .emacs.d directory. [↩](#a1)
 
 ## Usage
-Use `M-x zotero find`, after selecting a match press small `o` to open file in current frame.
+Use `M-x zotero find`, after selecting a match press small `o` to open file in current frame. Only a single search term can be used but Helm and Ivy offer functionality to narrow down on the results.
 
 ### Spacemacs
-Use `SPC SPC zotero-find`, after selecting a match press small `o` to open file in current frame.
+Use `SPC SPC zotero-find`. Only a single search term can be used but Helm and Ivy offer functionality to narrow down on the results. After selecting a match press small `o` to open file in current frame
 
 You might want to add a shortcut under `SPC SPC a z` by placing `(spacemacs/set-leader-keys "az" 'zotero-find)` in the user- config section of your dot-file
 
