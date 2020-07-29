@@ -1,5 +1,6 @@
 # zotero-find
 #### Emacs package to lookup and open items from a Zotero database
+
 The code in this package was taken and adopted from the calibre-mode package found at https://github.com/whacked/calibre-mode. For now it simply **searches for a match of a single given query in the titles and author names of the parent items** in the given Zotero database. **Items without parent items are not found** by the sql query in this package. Except for the code required for the zotero-find function, the code is dysfunctional (but kept here for possibility of updating/extending the package).
 
 ## Warnings!!
@@ -8,6 +9,7 @@ It looks like the package does not really work well if Zotero is not used to sto
 Although the package seems to work fine with both Ivy and Helm, I don't know how/if it works without any of these packages installed.
 
 *Although I expect this package to just work on most systems, it is not yet tested on other systems than my own. If there is some problem then please message me or open an issue* 
+
 ## Install
 
 Install in the usual way and set the `zotero-root-dir` variable either via setq in your dot-file or via the customization menu.
@@ -31,5 +33,9 @@ Use `M-x zotero find`, after selecting a match press small `o` to open file in c
 Use `SPC SPC zotero-find`. Only a single search term can be used but Helm and Ivy offer functionality to narrow down on the results. After selecting a match press small `o` to open file in current frame
 
 You might want to add a shortcut under `SPC SPC a z` by placing `(spacemacs/set-leader-keys "az" 'zotero-find)` in the user- config section of your dot-file
+
+## Alternative
+
+I wrote this package because I was not yet aware of the existence of [helm-bibtex/ivy-bibtex](https://github.com/tmalsburg/helm-bibtex) and the [zotero better-bibtex extension](https://retorque.re/zotero-better-bibtex/). Currently I am trying out the combination of those packages as an alternative to this package.
 
 email: dalanicolai@gmail.com
